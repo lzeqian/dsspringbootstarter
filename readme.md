@@ -1,5 +1,5 @@
 #基于springboot的动态主从路由库
-具体配置过程参考dsspringbootstart-test
+具体配置过程参考dsspringbootstart-test<br/>
 项目依赖：
 ```XML
 <dependency>
@@ -47,12 +47,12 @@ springboot运行主类添加启用数据源路由
 ```
 在需要切换数据源的service方法上添加
 ```java
-@DataSourceRoute(write = true)
+    @DataSourceRoute(write = true)
     public List<Map<String, Object>>  queryAll(){
         List<Map<String, Object>> query = jdbcTemplate.query("select * from user", new ColumnMapRowMapper());
         return query;
     }
 ```
-> write=true表示使用主库
-> read=true 表示使用从库
-> name=yml定义的数据源名称，使用指定名称的数据源
+>write=true表示使用主库<br/>
+>read=true 表示使用从库<br/>
+>name=yml定义的数据源名称，使用指定名称的数据源<br/>
