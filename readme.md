@@ -1,4 +1,4 @@
-#基于springboot的动态主从路由库
+# 基于springboot的动态主从路由库
 具体配置过程参考dsspringbootstart-test<br/>
 项目依赖：
 ```XML
@@ -8,7 +8,7 @@
   <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
-##多数据源配置
+## 多数据源配置
 >注意该项目只支持jdbc数据源，不支持jpa
 使用前禁用jpa
 ```java
@@ -41,6 +41,7 @@ spring:
 ```
 > primary: true表示主数据库，目前只支持一个primary数据库，不设置为从数据库
 
+## springboot中使用
 springboot运行主类添加启用数据源路由
 ```java
 @EnableDataSourceRoute
