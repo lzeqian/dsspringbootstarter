@@ -1,5 +1,5 @@
 # 基于springboot的动态主从路由库
-具体配置过程参考dsspringbootstart-test<br/>
+具体例子程序参考dsspringbootstart-test<br/>
 项目依赖：
 ```XML
 <dependency>
