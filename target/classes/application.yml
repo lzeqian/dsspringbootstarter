@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    primary:
+        username: root
+        url: jdbc:mysql://localhost/test
+        driver-class-name: com.mysql.jdbc.Driver
+        password: 123456
+        primary:  true
+    second:
+        username: root
+        url: jdbc:mysql://localhost/test1
+        driver-class-name: com.mysql.jdbc.Driver
+        password: 123456
+    thrid:
+        username: root
+        url: jdbc:mysql://localhost/test
+        driver-class-name: com.mysql.jdbc.Driver
+        password: 123456
+server:
+  port: 8888
+
+
+debug: false
