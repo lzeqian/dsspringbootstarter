@@ -62,7 +62,24 @@ springboot主类添加启用数据源路由
         return query;
     }
 ```
->write=true表示使用主库<br/>
->read=true 表示使用从库<br/>
->value=yml定义的数据源名称，使用指定名称的数据源<br/>
-  比如 value=primary 将使用名称为primary的数据源
+>@DataSourceRoute(write = true)表示使用主库<br/>
+>@DataSourceRoute(read = true)read=true 表示使用从库<br/>
+>@DataSourceRoute(value=yml定义的数据源名称，使用指定名称的数据源)<br/>
+  比如 value=primary 将使用名称为primary的数据源<br/>
+>@DataSourceRoute 表示所有库都提供服务，没有主从<br/>
+>不添加注解，默认使用第一个数据源<br/>
+
+## 多数据源负载算法
+默认采用随机算法
+```java
+@Bean
+    public SelectRule selectRule(){
+        return new RandomRule();
+    }
+```
+可以实现SelectRule接口自定义算法
+SelectRule接口的实现方法choose
+```java
+//targetDataSource 表示对应的库名称和DataSource的键值对映射
+public String choose(Map<Object, Object> targetDataSource);
+```
