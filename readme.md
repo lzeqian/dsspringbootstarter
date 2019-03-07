@@ -9,14 +9,18 @@
 </dependency>
 ```
 ## 多数据源配置
->注意该项目只支持jdbc数据源，不支持jpa
-使用前禁用jpa
+禁用jpa方式使用
 ```java
 @SpringBootApplication(exclude = {
         DataSourceAutoConfiguration.class,
         DataSourceTransactionManagerAutoConfiguration.class,
         HibernateJpaAutoConfiguration.class
  })
+ 
+```
+不禁用jpa的方式
+```java
+@SpringBootApplication
 ```
 spring.yml配置多数据源：
 ```
@@ -39,10 +43,10 @@ spring:
         driver-class-name: com.mysql.jdbc.Driver
         password: 123456
 ```
-> primary: true表示主数据库，目前只支持一个primary数据库，不设置为从数据库
+> primary: true表示主数据库，目前只支持一个primary数据库，不设置该数据源为从数据库
 
 ## springboot中使用
-springboot运行主类添加启用数据源路由
+springboot主类添加启用数据源路由
 ```java
 @EnableDataSourceRoute
 ```
@@ -56,4 +60,5 @@ springboot运行主类添加启用数据源路由
 ```
 >write=true表示使用主库<br/>
 >read=true 表示使用从库<br/>
->name=yml定义的数据源名称，使用指定名称的数据源<br/>
+>value=yml定义的数据源名称，使用指定名称的数据源<br/>
+  比如 value=primary 将使用名称为primary的数据源
