@@ -1,14 +1,14 @@
 package io.github.jiaozi789.utils;
 
 /**
- * @Author 廖敏
- * @Date 2019-03-04 12:39
+ * @author 廖敏
+ * 创建日期：  2019-03-04 12:39
  **/
 public class StringUtils {
     /**
      * 首字母转换成大写
      * @param str 被转换字符串 比如aaa
-     * @return 转换后的字符串 Aaa
+     * @return 转换后的字符串Aaa
      */
     public static String initCap(String str){
        return str.substring(0,1).toUpperCase()+str.substring(1);
@@ -18,7 +18,7 @@ public class StringUtils {
      * 将分隔字符串转换成波峰波谷
      * @param src 原始字符串 比如 a_bbb_ccc
      * @param separt 分隔字符串 _
-     * @return 返回波峰字符串  aBbbCcc
+     * @return 返回波峰字符串aBbbCcc
      */
     public static String toPeak(String src,String separt){
         int loc=0;

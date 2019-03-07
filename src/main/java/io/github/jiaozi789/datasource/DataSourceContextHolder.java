@@ -6,8 +6,8 @@ import java.util.List;
 
 /**
  * 管理当前线程的key
- * @Author 廖敏
- * @Date 2019-03-01 10:01
+ * @author 廖敏
+ * 创建日期：  2019-03-01 10:01
  **/
 public class DataSourceContextHolder {
     private static ThreadLocal<String> currentThreadKey=new ThreadLocal<String>();

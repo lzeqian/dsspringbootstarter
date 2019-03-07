@@ -1,6 +1,5 @@
 package io.github.jiaozi789.test;
 
-import io.github.jiaozi789.test.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

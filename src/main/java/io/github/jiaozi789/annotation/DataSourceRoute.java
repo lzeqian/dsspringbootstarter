@@ -3,8 +3,8 @@ package io.github.jiaozi789.annotation;
 import java.lang.annotation.*;
 
 /**
- * @Author 廖敏
- * @Date 2019-03-01 14:46
+ * @author 廖敏
+ * 创建日期： 2019-03-01 14:46
  **/
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)

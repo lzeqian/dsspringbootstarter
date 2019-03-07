@@ -1,22 +1,21 @@
 package io.github.jiaozi789.aop;
 
-import io.github.jiaozi789.annotation.DataSourceRoute;
 import io.github.jiaozi789.config.DataSourceRegister;
 import io.github.jiaozi789.datasource.DataSourceContextHolder;
+import io.github.jiaozi789.annotation.DataSourceRoute;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Random;
 
 /**
- * @Author 廖敏
- * @Date 2019-03-04 14:14
+ * @author 廖敏
+ * 创建日期：  2019-03-04 14:14
  **/
 @Aspect
 public class DataSourceRouteAspect {

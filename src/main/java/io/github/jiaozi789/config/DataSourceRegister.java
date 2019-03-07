@@ -21,8 +21,8 @@ import java.util.Map;
 
 /**
  * 配置加载类
- * @Author 廖敏
- * @Date 2019-03-01 10:14
+ * @author 廖敏
+ * 创建日期：  2019-03-01 10:14
  **/
 @Component
 @Order(9)

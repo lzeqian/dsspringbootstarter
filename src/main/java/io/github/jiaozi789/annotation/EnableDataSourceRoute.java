@@ -6,9 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.context.annotation.Import;
-
 import io.github.jiaozi789.config.RouteDataSourceAutoConfiguration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author 廖敏
