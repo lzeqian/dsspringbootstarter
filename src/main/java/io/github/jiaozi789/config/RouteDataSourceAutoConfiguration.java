@@ -1,7 +1,7 @@
 package io.github.jiaozi789.config;
 
-import io.github.jiaozi789.aop.DataSourceRouteAspect;
 import io.github.jiaozi789.datasource.MultiDataSource;
+import io.github.jiaozi789.aop.DataSourceRouteAspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +14,8 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import javax.sql.DataSource;
 
 /**
- * @Author 廖敏
- * @Date 2019-03-04 14:02
+ * @author 廖敏
+ * 创建日期：  2019-03-04 14:02
  **/
 @Configuration
 @Order(10)
@@ -31,9 +31,14 @@ public class RouteDataSourceAutoConfiguration {
         }
         return multiDataSource;
     }
+    @ConditionalOnMissingBean
     @Bean
     public JdbcTemplate jdbcTemplate(@Autowired DataSource dataSources){
         return new JdbcTemplate(dataSources);
+    }
+    @Bean
+    public DataSourceRegister dataSourceRegister(){
+        return new DataSourceRegister();
     }
     @Bean
     public DataSourceRouteAspect recordLogAspect() {
