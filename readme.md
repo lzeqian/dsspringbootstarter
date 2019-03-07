@@ -1,5 +1,9 @@
 # 基于springboot的动态主从路由库
 具体例子程序参考dsspringbootstart-test<br/>
+添加maven快照仓库
+```XML
+https://oss.sonatype.org/content/repositories/snapshots
+```
 项目依赖：
 ```XML
 <dependency>
