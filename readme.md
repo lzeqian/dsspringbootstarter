@@ -47,7 +47,8 @@ spring:
         driver-class-name: com.mysql.jdbc.Driver
         password: 123456
 ```
-> primary: true表示主数据库，目前只支持一个primary数据库，不设置该数据源为从数据库
+> primary: true表示主数据库
+> 不指定type设置数据源类型，默认使用druid
 
 ## springboot中使用
 springboot主类添加启用数据源路由
