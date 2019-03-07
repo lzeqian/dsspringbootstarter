@@ -1,6 +1,9 @@
 package io.github.jiaozi789.config;
 
+import io.github.jiaozi789.aop.SourceDef;
+import io.github.jiaozi789.utils.ReflectUtils;
 import io.github.jiaozi789.utils.StringUtils;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -14,7 +17,6 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ import java.util.Map;
  **/
 @Component
 @Order(9)
+@Data
 public class DataSourceRegister {
     /**
      * spring配置环境
@@ -39,37 +42,21 @@ public class DataSourceRegister {
     private DefaultListableBeanFactory ac;
     /**
      * 数据源配置格式化
+     * key：所有数据源名字
+     * value:所有数据源的配置项
      */
-    private HashMap<String,List<String>> dataSoureNames;
-    public String masterName;
-    public Map<Object, Object> targetDataSources=new HashMap<>();
+    private HashMap<String,SourceDef> dataSoureNames;
+    private Map<Object, Object> targetDataSources=new HashMap<>();
     /**
      * 数据源前缀
      */
     private String prefix="spring.datasource.";
-    private static Field getField(Object object,String field)  {
-        Class clazz = object.getClass();
-        while (clazz != null){
-            try {
-                Field declaredField = clazz.getDeclaredField(field);
-                return declaredField;
-            } catch (NoSuchFieldException e) {
-            }
-            clazz = clazz.getSuperclass();
-        }
-        return null;
-    }
-    private static Method getMethod(Object object,String methodName)  {
-        Class clazz = object.getClass();
-        while (clazz != null){
-            try {
-                Method declaredMethod = clazz.getDeclaredMethod(methodName,String.class);
-                return declaredMethod;
-            } catch (NoSuchMethodException e) {
-            }
-            clazz = clazz.getSuperclass();
-        }
-        return null;
+    private Map primayMap=null;
+    private Map secondaryMap=null;
+    public void parsePrimaryAndSecondary(){
+        List<Map> ifPrimary = ReflectUtils.getEqualOrNotEqualAtMapObj(dataSoureNames, "ifPrimary", true);
+        primayMap=ifPrimary.get(0);
+        secondaryMap=ifPrimary.get(1);
     }
     /**
      * 注册数据源bean
@@ -77,7 +64,8 @@ public class DataSourceRegister {
     public void initDataSourceBean(){
         dataSoureNames.keySet().forEach(item->{
             try {
-                List<String> strings = dataSoureNames.get(item);
+                SourceDef sourceDef = dataSoureNames.get(item);
+                List<String> strings = sourceDef.getSourceConfList();
                 String configPreName=prefix+item;
                 String type=env.getProperty(configPreName+".type");
                 Class dataSourceCLass=null;
@@ -93,12 +81,12 @@ public class DataSourceRegister {
                 strings.forEach(k->{
                     String property=k.split(configPreName+".")[1];
                     try {
-                        Field declaredField = getField(dataSource,property);
+                        Field declaredField = ReflectUtils.getField(dataSource,property);
                         if(declaredField!=null){
                             declaredField.setAccessible(true);
                             declaredField.set(dataSource,env.getProperty(k));
                         }else{
-                            Method method = getMethod(dataSource, "set" + StringUtils.toPeak(StringUtils.initCap(property),"-"));
+                            Method method = ReflectUtils.getMethod(dataSource, "set" + StringUtils.toPeak(StringUtils.initCap(property),"-"));
                             if(method!=null){
                                 method.invoke(dataSource,env.getProperty(k));
                             }
@@ -119,7 +107,7 @@ public class DataSourceRegister {
                 String ifPrimary = env.getProperty(primary);
                 if("true".equalsIgnoreCase(ifPrimary)){
                     //beanDefinition.setPrimary(true);
-                    masterName=item;
+                    sourceDef.setIfPrimary(true);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -141,13 +129,14 @@ public class DataSourceRegister {
                             String suffixPart=propertyName.substring(prefix.length());
                             String suffix=(suffixPart.substring(0,suffixPart.indexOf(".")));
                             List<String> strings=null;
+                            SourceDef sourceDef=null;
                             if(dataSoureNames.containsKey(suffix)){
-                                strings= dataSoureNames.get(suffix);
+                                sourceDef= dataSoureNames.get(suffix);
                             }else{
-                               strings=new ArrayList<>();
-                               dataSoureNames.put(suffix,strings);
+                                sourceDef=new SourceDef();
+                                dataSoureNames.put(suffix,sourceDef);
                             }
-                            strings.add(propertyName);
+                            sourceDef.getSourceConfList().add(propertyName);
                         }
                     }
 
@@ -160,5 +149,7 @@ public class DataSourceRegister {
         dataSoureNames=new HashMap<>();
         parseDataSourceConf();
         initDataSourceBean();
+        parsePrimaryAndSecondary();
     }
+
 }

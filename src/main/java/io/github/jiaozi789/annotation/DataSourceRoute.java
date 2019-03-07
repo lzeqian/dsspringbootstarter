@@ -12,5 +12,5 @@ import java.lang.annotation.*;
 public @interface DataSourceRoute {
     String value() default "";
     boolean write() default false;
-    boolean read() default true;
+    boolean read() default false;
 }

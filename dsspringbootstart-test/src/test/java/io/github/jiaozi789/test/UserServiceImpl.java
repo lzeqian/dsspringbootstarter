@@ -20,7 +20,7 @@ public class UserServiceImpl {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @DataSourceRoute(read = true)
+    @DataSourceRoute(write = true)
     public List<Map<String, Object>>  queryAll(){
         List<Map<String, Object>> query = jdbcTemplate.query("select * from user", new ColumnMapRowMapper());
         return query;
